@@ -1,107 +1,112 @@
+import { API_ENDPOINTS } from '@/services/endpoints';
 import apiClient from '@/services/http-common';
 import { useQuery, useMutation } from '@tanstack/react-query';
 
+const { USER_ENDPOINTS } = API_ENDPOINTS;
 // 로그인 상태 확인
-const useCheckLogin = (email) => {
-  return useQuery(['checkLogin', email], () => {
-    return apiClient.get('/users/check-email', { params: { email } });
+export const useCheckLogin = (email) => {
+  return useQuery({
+    queryKey: ['checkLogin', email],
+    queryFn: () =>
+      apiClient.get(USER_ENDPOINTS.CHECK_LOGIN, { params: { email } }),
   });
 };
 
 // 로그인
-const useLogin = () => {
-  return useMutation((user) => {
-    return apiClient.post('/auth/login', user);
+export const useLogin = () => {
+  return useMutation({
+    mutationFn: (user) => {
+      return apiClient.post(USER_ENDPOINTS.LOGIN, user);
+    },
   });
 };
 
 // 로그아웃
-const useLogout = () => {
-  return useMutation((user) => {
-    return apiClient.post('/auth/logout', user);
+export const useLogout = () => {
+  return useMutation({
+    mutationFn: (user) => {
+      return apiClient.post(USER_ENDPOINTS.LOGOUT, user);
+    },
   });
 };
 
 // 회원가입
-const useSignup = () => {
-  return useMutation((user) => {
-    return apiClient.post('/user/signup', user);
+export const useSignup = () => {
+  return useMutation({
+    mutationFn: (user) => {
+      return apiClient.post(USER_ENDPOINTS.SIGNUP, user);
+    },
   });
 };
 
 // 닉네임 중복 확인
-const useCheckNickname = (nickname) => {
-  return useQuery(['checkNickname', nickname], () => {
-    return apiClient.get('/users/check-nickname', {
-      params: { nickname },
-    });
+export const useCheckNickname = (nickname) => {
+  return useQuery({
+    queryKey: ['checkNickname', nickname],
+    queryFn: () =>
+      apiClient.get(USER_ENDPOINTS.CHECK_NICKNAME, { params: { nickname } }),
   });
 };
 
 // 이메일 중복 확인
-const useCheckEmail = (email) => {
-  return useQuery(['checkEmail', email], () => {
-    return apiClient.get('/users/check-email', { params: { email } });
+export const useCheckEmail = (email) => {
+  return useQuery({
+    queryKey: ['checkEmail', email],
+    queryFn: () =>
+      apiClient.get(USER_ENDPOINTS.CHECK_EMAIL, { params: { email } }),
   });
 };
 
 // 회원 정보 수정
-const useUpdateUserInfo = () => {
-  return useMutation((formData) => {
-    return apiClient.put('/user/me', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+export const useUpdateUserInfo = () => {
+  return useMutation({
+    mutationFn: (formData) => {
+      return apiClient.put(USER_ENDPOINTS.USER_INFO, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+    },
   });
 };
 
 // 회원 탈퇴
-const useDeleteUser = () => {
-  return useMutation(() => {
-    return apiClient.delete('/user/me');
+export const useDeleteUser = () => {
+  return useMutation({
+    mutationFn: () => {
+      return apiClient.delete(USER_ENDPOINTS.USER_INFO);
+    },
   });
 };
 
 // 사용자가 좋아요한 관광지 목록 조회
-const useGetUserLikes = () => {
-  return useQuery('getUserLikes', () => {
-    return apiClient.get('/user/likes');
+export const useGetUserLikes = () => {
+  return useQuery({
+    queryKey: ['getUserLikes'],
+    queryFn: () => apiClient.get(USER_ENDPOINTS.USER_LIKE),
   });
 };
 
 // 사용자가 남긴 리뷰 목록 조회
-const useGetUserReviews = () => {
-  return useQuery('getUserReviews', () => {
-    return apiClient.get('/user/reviews');
+export const useGetUserReviews = () => {
+  return useQuery({
+    queryKey: ['getUserReviews'],
+    queryFn: () => apiClient.get(USER_ENDPOINTS.USER_REVIEW),
   });
 };
 
 // 사용자의 아보그 목록 조회
-const useGetUserAbogs = () => {
-  return useQuery('getUserAbogs', () => {
-    return apiClient.get('/user/abogs');
+export const useGetUserAbogs = () => {
+  return useQuery({
+    queryKey: ['getUserAbogs'],
+    queryFn: () => apiClient.get(USER_ENDPOINTS.USER_ABOG),
   });
 };
 
 // 사용자 정보 조회
-const useGetUserInfo = () => {
-  return useQuery('getUserInfo', () => {
-    return apiClient.get('/user/me'); // 예시 URL
+export const useGetUserInfo = () => {
+  return useQuery({
+    queryKey: ['getUserInfo'],
+    queryFn: () => apiClient.get(USER_ENDPOINTS.USER_INFO),
   });
-};
-
-export default {
-  useCheckLogin,
-  useLogin,
-  useLogout,
-  useSignup,
-  useCheckNickname,
-  useCheckEmail,
-  useUpdateUserInfo,
-  useDeleteUser,
-  useGetUserLikes,
-  useGetUserReviews,
-  useGetUserAbogs,
-  useGetUserInfo,
 };

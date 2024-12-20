@@ -18,6 +18,7 @@ import MypageSettingsPage from '@/pages/MypageSettingsPage/MypageSettingsPage';
 import ChallengePage from '@/pages/ChallengePage/ChallengePage';
 import SuggestPage from '@/pages/SuggestPage/SuggestPage';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import BasicLayout from '@/components/layout/BasicLayout/BasicLayout';
 
 function App() {
   const queryClient = new QueryClient();
@@ -51,19 +52,24 @@ function App() {
             </Route>
           </Route>
 
-          {/* Login */}
-          <Route path={routes.login} element={<LoginPage />} />
-          {/* Signup */}
-          <Route path={routes.signup} element={<SignupPage />} />
+          <Route element={<BasicLayout />}>
+            {/* Login */}
+            <Route path={routes.login} element={<LoginPage />} />
+            {/* Signup */}
+            <Route path={routes.signup} element={<SignupPage />} />
+
+            {/* Today's challenge */}
+            <Route path={routes.challenge} element={<ChallengePage />} />
+            {/* Travel suggestions */}
+            <Route path={routes.suggest} element={<SuggestPage />} />
+          </Route>
+
           {/* My page */}
           <Route path={routes.mypage} element={<MypageLayout />}>
             <Route index element={<MypageMainPage />} />
             <Route path='setting' element={<MypageSettingsPage />} />
           </Route>
-          {/* Today's challenge */}
-          <Route path={routes.challenge} element={<ChallengePage />} />
-          {/* Travel suggestions */}
-          <Route path={routes.suggest} element={<SuggestPage />} />
+
           {/* 404 Not Found */}
           <Route path='*' element={<NotFoundPage />} />
         </Routes>
