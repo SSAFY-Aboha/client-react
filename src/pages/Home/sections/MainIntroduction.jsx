@@ -42,7 +42,6 @@ const MainIntroduction = () => {
       setIsAlertVisible(false);
     }, 3000);
   };
-  console.log('React Element', <div>아보하</div>);
   return (
     <section className='flex flex-col w-full items-center justify-center h-[calc(100vh-4rem)]'>
       {isAlertVisible && (
