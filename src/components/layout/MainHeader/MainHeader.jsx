@@ -1,31 +1,17 @@
 import ProfileIcon from '@/components/common/ProfileIcon/ProfileIcon';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import useUserActions from '@/hooks/useUserActions';
+import useUserStore from '@/stores/user';
 import { StarIcon } from 'lucide-react';
 import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router';
 
 function MainHeader() {
-  //
-  const [isLoading, seIsLoading] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const lastScrollPositionRef = useRef(0);
   const SCROLL_THRESHOLD = 50;
 
-  // test
-  const { login } = useUserActions();
-  const [userFormData, setUserFormData] = useState({
-    email: 'test@test.com',
-    password: '1q2w3e4r!',
-  });
-
-  //
-  const [userInfo, setUserInfo] = useState({
-    email: '',
-    profileImageUrl: '',
-  });
+  const { isAuthenticated, userInfo } = useUserStore();
 
   // 스크롤 감지를 통해 Header를 보일 지 말지 결정하는 이벤트 부여
   useEffect(() => {
@@ -107,42 +93,35 @@ function MainHeader() {
         </nav>
 
         <div className='flex items-center space-x-4'>
-          {isLoading ? (
-            <>
-              <Skeleton className='h-9 w-[100px]' />
-              <Skeleton className='w-10 h-10 rounded-full' />
-            </>
-          ) : (
-            <>
-              {!isAuthenticated ? (
-                <>
-                  <Button
-                    variant='ghost'
-                    className='hidden text-sm md:inline-flex'
-                  >
-                    <Link to='/signup'>회원가입</Link>
-                  </Button>
-                  <Button className='text-sm bg-green-500 hover:bg-green-600'>
-                    <Link to='/login'>로그인</Link>
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <Button
-                    variant='ghost'
-                    size='sm'
-                    onClick={handleLogout}
-                    className='text-sm'
-                  >
-                    로그아웃
-                  </Button>
-                  <Link to={`/mypage/${userInfo.email}`} className='relative'>
-                    <ProfileIcon src={userInfo.profileImageUrl} />
-                  </Link>
-                </>
-              )}
-            </>
-          )}
+          <>
+            {!isAuthenticated ? (
+              <>
+                <Button
+                  variant='ghost'
+                  className='hidden text-sm md:inline-flex'
+                >
+                  <Link to='/signup'>회원가입</Link>
+                </Button>
+                <Button className='text-sm bg-green-500 hover:bg-green-600'>
+                  <Link to='/login'>로그인</Link>
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  variant='ghost'
+                  size='sm'
+                  onClick={handleLogout}
+                  className='text-sm'
+                >
+                  로그아웃
+                </Button>
+                <Link to={`/mypage/${userInfo.email}`} className='relative'>
+                  <ProfileIcon src={userInfo.profileImageUrl} />
+                </Link>
+              </>
+            )}
+          </>
         </div>
       </div>
     </header>

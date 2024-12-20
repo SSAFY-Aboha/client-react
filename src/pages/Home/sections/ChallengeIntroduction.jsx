@@ -1,7 +1,9 @@
 import { Button } from '@/components/ui/button';
 import { StarIcon } from 'lucide-react';
+import { useNavigate } from 'react-router';
 
 const ChallengeIntroduction = () => {
+  const navigate = useNavigate();
   return (
     <section className='flex flex-col items-center justify-center w-full py-6 bg-gray-50'>
       <div className='flex flex-col items-center justify-center max-w-screen-xl gap-8 py-12 mx-auto'>
@@ -51,7 +53,7 @@ const ChallengeIntroduction = () => {
         <Button
           variant='outline'
           className='py-6 mt-6 text-lg font-medium text-white transition-all duration-300 bg-green-600 border-none rounded-xl w-80 hover:bg-green-700 hover:shadow-lg hover:scale-105 active:scale-95 focus:ring-4 focus:ring-green-200'
-          onClick="$router.push('/challenge')"
+          onClick={() => navigate('/challenge')}
         >
           <div className='flex items-center justify-center gap-2'>
             <i className='text-xl pi pi-star'></i>
