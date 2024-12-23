@@ -4,7 +4,7 @@
 
 - React
 - React Router
-- Recoil
+- zustand
 - tailwind CSS
 - Shadcn UI
 

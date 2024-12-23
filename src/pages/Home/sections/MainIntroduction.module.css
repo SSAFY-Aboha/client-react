@@ -1,0 +1,50 @@
+.clover {
+  position: absolute;
+  top: -20px;
+  font-size: 20px;
+  animation: falling var(--duration, 15s) var(--delay, 0s) linear infinite;
+  left: var(--position, 0);
+  opacity: 0.7;
+  transform-style: preserve-3d;
+  transform: translateZ(0);
+}
+
+.clover:hover {
+  transform: scale(1.2);
+}
+
+@keyframes falling {
+  0% {
+    transform: translateY(-20px) rotate(0deg);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(50vh) rotate(180deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0.7;
+  }
+}
+
+/* 각 클로버마다 다른 애니메이션 속도와 회전을 주기 위한 개별 설정 */
+.clover:nth-child(2n) {
+  --duration: 13s;
+  font-size: 15px;
+}
+
+.clover:nth-child(3n) {
+  --duration: 17s;
+  font-size: 25px;
+}
+
+.clover:nth-child(4n) {
+  --duration: 22s;
+  font-size: 18px;
+}
+
+.clover:nth-child(5n) {
+  --duration: 19s;
+  font-size: 22px;
+}
