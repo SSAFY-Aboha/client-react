@@ -45,6 +45,7 @@ export const useCheckNickname = (nickname) => {
     queryKey: ['checkNickname', nickname],
     queryFn: () =>
       apiClient.get(USER_ENDPOINTS.CHECK_NICKNAME, { params: { nickname } }),
+    enabled: false, // 초기 마운트 시에는 호출하지 않음
   });
 };
 
@@ -52,8 +53,13 @@ export const useCheckNickname = (nickname) => {
 export const useCheckEmail = (email) => {
   return useQuery({
     queryKey: ['checkEmail', email],
-    queryFn: () =>
-      apiClient.get(USER_ENDPOINTS.CHECK_EMAIL, { params: { email } }),
+    queryFn: async () => {
+      const res = await apiClient.get(USER_ENDPOINTS.CHECK_EMAIL, {
+        params: { email },
+      });
+      return res;
+    },
+    enabled: false, // 초기 마운트 시에는 호출하지 않음
   });
 };
 
